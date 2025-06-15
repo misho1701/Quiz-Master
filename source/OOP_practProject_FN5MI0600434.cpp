@@ -117,22 +117,6 @@ int main() {
 				users.push_back(new Player(fn.c_str(), ln.c_str(), un.c_str(), pw.c_str()));
 				std::cout << "Player account created successfully.\n";
 			}
-            /*else {
-                std::cout << "Choose role (1 = Player, 2 = Admin): ";
-                std::cin >> roleInput;
-
-                if (roleInput == 1) {
-                    users.push_back(new Player(fn.c_str(), ln.c_str(), un.c_str(), pw.c_str()));
-                    std::cout << "Player account created successfully.\n";
-                }
-                else if (roleInput == 2) {
-                    users.push_back(new Admin(fn.c_str(), ln.c_str(), un.c_str(), pw.c_str()));
-                    std::cout << "Admin account created successfully.\n";
-                }
-                else {
-                    std::cout << "Invalid role selected.\n";
-                }
-            }*/
         }
 
         else if (command == "help") {
