@@ -23,5 +23,7 @@ public:
 	virtual void readFromFile(std::ifstream& ifs) = 0;  
 	virtual void writeToFile(std::ofstream& ofs) const = 0;
 
+	String getText() const;
+
     int getPoints() const;
 };

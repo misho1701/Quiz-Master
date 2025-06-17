@@ -23,15 +23,13 @@ class Player : public Users {
     int quizzesCreated;
     Vector<Challenge> activeChallenges;
     Vector<Challenge> completedChallenges;
-    Vector<String> favoriteQuizzes;
+    Vector<String> favoriteQuizzesPlayer;
 
     void updateLevel();
 
 public:
-    enum class Role {
-        ADMIN,
-        PLAYER
-    };
+    
+	Player() = default;
     Player(const String& fn, const String& ln, const String& un, const String& pw);
 
     void addPoints(int p);
@@ -48,11 +46,12 @@ public:
 	void viewChallenges() const;
 
     int getPoints() const;
-	Users::Role getRole() const override;
+    Role getRole() const override;
 	void resetProgress();
 	bool isPlayer() const override;
     bool isAdmin() const override;
     void printInfo() const override;
+	Users* clone() const override;
 
 	void readFromFile(std::ifstream& ifs) override;
 	void writeToFile(std::ofstream& ofs) const override;

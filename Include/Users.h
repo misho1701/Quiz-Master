@@ -7,21 +7,22 @@
 #include "ChallengeProgress.h"
 #pragma warning(disable:4996)
 
+enum class Role {
+    ADMIN,
+    PLAYER
+};
 
 class Users {
 protected:
     String firstName, lastName, username, password;
     Vector<Message> messages;
-    Vector<Quiz*> favoriteQuizzes;
+    Vector<Quiz> favoriteQuizzes;
     Vector<ChallengeProgress> challenges;
     bool isBanned;
 
 public:
 
-    enum class Role {
-        ADMIN,
-        PLAYER
-    };
+	Users() = default;
     Users(const String& fn, const String& ln, const String& un, const String& pw);
     virtual ~Users();
 
@@ -40,6 +41,7 @@ public:
     virtual bool isAdmin() const = 0;
 	virtual bool isPlayer() const = 0;
     virtual void printInfo() const;
+    virtual Users* clone() const = 0;
 
     virtual void readFromFile(std::ifstream& ifs);
     virtual void writeToFile(std::ofstream& ofs) const;

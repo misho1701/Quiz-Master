@@ -7,15 +7,8 @@
 #include "MultipleChoiceQuestion.h"
 #include "ShortAnswerQuestion.h"
 #include "MatchingPairQuestion.h"
+#include "QuestionType.h"
 
-enum class QuestionType 
-{
-	TrueOrFalse,
-	SingleChoice,
-	MultipleChoice,
-	ShortAnswer,
-	MatchingPairs
-};
 
 class QuestionFactory
 {
