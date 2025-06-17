@@ -76,8 +76,9 @@ String MatchingPairsQuestion::getType() const {
 
 void MatchingPairsQuestion::readFromFile(std::ifstream& ifs)
 {
+    ifs >> points;
+    ifs.ignore();
 	ifs >> text;
-	ifs >> points;
 
 	int leftSize, rightSize, matchesSize;
 	ifs >> leftSize >> rightSize >> matchesSize;
@@ -86,16 +87,18 @@ void MatchingPairsQuestion::readFromFile(std::ifstream& ifs)
 	rightColumn.resize(rightSize);
 	correctMatches.resize(matchesSize);
 
+    ifs.ignore();
+
 	for (int i = 0; i < leftSize; ++i) {
-		String temp;
-		ifs >> temp;
-		leftColumn[i] = temp;
+        std::string tempAnswer;
+        std::getline(ifs, tempAnswer);
+		leftColumn[i] = String(tempAnswer.c_str());
 	}
 
 	for (int j = 0; j < rightSize; ++j) {
-		String temp;
-		ifs >> temp;
-		rightColumn[j] = temp;
+        std::string tempAnswer;
+        std::getline(ifs, tempAnswer);
+        rightColumn[j] = String(tempAnswer.c_str());
 	}
 
 	for (int k = 0; k < matchesSize; ++k) {
@@ -110,22 +113,20 @@ void MatchingPairsQuestion::writeToFile(std::ofstream& ofs) const
 	int type = (int)QuestionType::MatchingPairs;
 	ofs << type << "\n";
 
-	ofs << text << " " << points << "\n";
+	ofs << points << "\n";
+	ofs << text << "\n";
 	ofs << leftColumn.size() << " " << rightColumn.size() << " " << correctMatches.size() << "\n";
 
 	for (const auto& item : leftColumn) {
-		ofs << item.c_str() << " ";
+		ofs << item.c_str() << "\n";
 	}
-	ofs << "\n";
-
+	
 	for (const auto& item : rightColumn) {
-		ofs << item.c_str() << " ";
+		ofs << item.c_str() << "\n";
 	}
-	ofs << "\n";
-
+	
 	for (const auto& match : correctMatches) {
 		ofs << match + 1 << " "; 
 	}
-	ofs << "\n";
 }
 
