@@ -1,5 +1,6 @@
 #include "TrueOrFalseQuestion.h"
 #include <iostream>
+#include "QuestionType.h"
 
 TrueOrFalseQuestion::TrueOrFalseQuestion(const String& text, int points, bool correct)
     : Question(text, points), correctAnswer(correct) {}
@@ -26,7 +27,7 @@ String TrueOrFalseQuestion::getType() const {
 void TrueOrFalseQuestion::readFromFile(std::ifstream& ifs)
 {
 	ifs >> points;
-	ifs.ignore('\n');
+	ifs.ignore();
 
 	std::string tempText;
 	std::getline(ifs, tempText);
@@ -40,6 +41,9 @@ void TrueOrFalseQuestion::readFromFile(std::ifstream& ifs)
 
 void TrueOrFalseQuestion::writeToFile(std::ofstream& ofs) const
 {
+	int type = (int)QuestionType::TrueOrFalse;
+	ofs << type << "\n";
+
 	ofs << points << '\n';
 	ofs << text.c_str() << '\n';
 	ofs << (correctAnswer ? "true" : "false") << '\n';

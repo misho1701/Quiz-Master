@@ -1,6 +1,7 @@
 ﻿#include "MatchingPairQuestion.h"
 #include <iostream>
 #include <sstream>
+#include "QuestionType.h"
 
 MatchingPairsQuestion::MatchingPairsQuestion(const String& text, int points, const Vector<String>& left, const Vector<String>& right, const Vector<int>& matches)
     : Question(text, points), leftColumn(left), rightColumn(right), correctMatches(matches) {}
@@ -106,6 +107,9 @@ void MatchingPairsQuestion::readFromFile(std::ifstream& ifs)
 
 void MatchingPairsQuestion::writeToFile(std::ofstream& ofs) const
 {
+	int type = (int)QuestionType::MatchingPairs;
+	ofs << type << "\n";
+
 	ofs << text << " " << points << "\n";
 	ofs << leftColumn.size() << " " << rightColumn.size() << " " << correctMatches.size() << "\n";
 

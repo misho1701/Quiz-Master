@@ -5,7 +5,7 @@ UserContainer::UserContainer()
 	size = 0;
 	capacity = MIN_CAPACITY;
 	arr = new Users * [capacity];
-	//addDefaultAdministrators();
+//addDefaultAdministrators();
 }
 
 UserContainer::UserContainer(const UserContainer& other)
@@ -38,10 +38,11 @@ void UserContainer::copyFrom(const UserContainer& other)
 }
 void UserContainer::free()
 {
-	for (int i = 0; i < size; i++)
+	for (int i = 0; i < this->size; i++)
 	{
 		delete arr[i];
 	}
+
 	delete[] arr;
 }
 
@@ -94,11 +95,17 @@ void UserContainer::addUser(const Users& newUser)
 }
 void UserContainer::addDefaultAdministrators()
 {
-	arr[size++] = new Admin("Admin", "One", "admin1", "0000");
-	arr[size++] = new Admin("Admin", "Two", "admin2", "0000");
-	arr[size++] = new Admin("Admin", "Three", "admin3", "0000");
-	arr[size++] = new Admin("Admin", "Four", "admin4", "0000");
-	arr[size++] = new Admin("Admin", "Five", "admin5", "0000");
+	Users* admin1 = new Admin("Admin", "One", "admin1", "0000");
+	Users* admin2 = new Admin("Admin", "Two", "admin2", "0000");
+	Users* admin3 = new Admin("Admin", "Three", "admin3", "0000");
+	Users* admin4 = new Admin("Admin", "Four", "admin4", "0000");
+	Users* admin5 = new Admin("Admin", "Five", "admin5", "0000");
+
+	addUser(*admin1);
+	addUser(*admin2);
+	addUser(*admin3);
+	addUser(*admin4);
+	addUser(*admin5);
 }
 void UserContainer::findUserByUsername(const String& username, Users*& result) const
 {
@@ -189,6 +196,7 @@ void UserContainer::witeToTextFile(std::ofstream& ofs) const
 void UserContainer::readFromTextFile(std::ifstream& ifs)
 {
 	free();
+	this->arr = new Users * [capacity];
 	while(true)
 	{
 		String type;

@@ -1,5 +1,6 @@
 #include "ShortAnswerQuestion.h"
 #include <iostream>
+#include "QuestionType.h"
 
 ShortAnswerQuestion::ShortAnswerQuestion(const String& text, int points, const String& answer)
     : Question(text, points), correctAnswer(answer) {}
@@ -40,6 +41,8 @@ void ShortAnswerQuestion::readFromFile(std::ifstream& ifs) {
     
 void ShortAnswerQuestion::writeToFile(std::ofstream& ofs) const
 {
+    int type = (int)QuestionType::ShortAnswer;
+    ofs << type << "\n";
 	ofs << points << '\n';
 	ofs << text.c_str() << '\n';
 	ofs << correctAnswer.c_str() << '\n';

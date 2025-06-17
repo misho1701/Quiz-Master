@@ -1,6 +1,7 @@
 #include "MultipleChoiceQuestion.h"
 #include <iostream>
 #include <sstream>
+#include "QuestionType.h"
 
 MultipleChoiceQuestion::MultipleChoiceQuestion(const String& text, int points, const Vector<String>& opts, const Vector<int>& correct)
     : Question(text, points), options(opts), correctIndices(correct) {}
@@ -78,6 +79,8 @@ void MultipleChoiceQuestion::readFromFile(std::ifstream& ifs)
 
 void MultipleChoiceQuestion::writeToFile(std::ofstream& ofs) const
 {
+    int type = (int)QuestionType::MultipleChoice;
+    ofs << type << "\n";
 	ofs << text << " " << points << "\n";
 	ofs << options.size() << "\n";
 	for (const auto& option : options) {

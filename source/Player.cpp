@@ -18,9 +18,9 @@ int Player::getPoints() const
 	return points;
 }
 
-Users::Role Player::getRole() const
+Role Player::getRole() const
 {
-	return Users::Role::PLAYER;
+	return Role::PLAYER;
 }
 
 void Player::resetProgress()
@@ -82,14 +82,14 @@ void Player::addPoints(int pts) {
 }
 
 void Player::addFavorite(const String& quizId) {
-    favoriteQuizzes.push_back(quizId);
+    favoriteQuizzesPlayer.push_back(quizId);
 }
 
 void Player::removeFavorite(const String& quizId)
 {
     size_t index = 0;
     for (size_t i = 0; i < favoriteQuizzes.size(); i++) {
-        if (favoriteQuizzes[i] == quizId) {
+        if (favoriteQuizzesPlayer[i] == quizId) {
             index = i;
         }
     }
@@ -98,8 +98,8 @@ void Player::removeFavorite(const String& quizId)
 
 void Player::listFavorites() const {
     std::cout << "Favourite Quizzes: ";
-    for (size_t i = 0; i < favoriteQuizzes.size(); i++) {
-        favoriteQuizzes[i].print();
+    for (size_t i = 0; i < favoriteQuizzesPlayer.size(); i++) {
+        favoriteQuizzesPlayer[i].print();
         std::cout << ", ";
     }
     std::cout << std::endl;
@@ -198,6 +198,11 @@ void Player::printInfo() const {
 	std::cout << "Quizzes Created: " << quizzesCreated << std::endl;
 }
 
+Users* Player::clone() const
+{
+	return new Player(*this);
+}
+
 void Player::readFromFile(std::ifstream& ifs)
 {
 	Users::readFromFile(ifs);
@@ -236,16 +241,18 @@ void Player::readFromFile(std::ifstream& ifs)
 
 	int favCount;
 	ifs >> favCount;
-	favoriteQuizzes.resize(favCount);
+    favoriteQuizzesPlayer.resize(favCount);
 	for (int i = 0; i < favCount; ++i) {
 		String quizId;
 		quizId.readFromFile(ifs);
-		favoriteQuizzes.push_back(quizId);
+        favoriteQuizzesPlayer.push_back(quizId);
 	}
 }
 
 void Player::writeToFile(std::ofstream& ofs) const
 {
+	ofs << "Player\n"; // Indicate the type of user
+
 	Users::writeToFile(ofs);
 	ofs << points << '\n';
 	ofs << level << '\n';
@@ -273,8 +280,8 @@ void Player::writeToFile(std::ofstream& ofs) const
 			<< challenge.completionTime << '\n';
 	}
 
-	ofs << favoriteQuizzes.size() << '\n';
-	for (const auto& quizId : favoriteQuizzes) {
+	ofs << favoriteQuizzesPlayer.size() << '\n';
+	for (const auto& quizId : favoriteQuizzesPlayer) {
 		quizId.writeToFile(ofs);
 	}
 }

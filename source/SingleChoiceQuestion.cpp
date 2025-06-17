@@ -1,5 +1,6 @@
 #include "SingleChoiceQuestion.h"
 #include <iostream>
+#include "QuestionType.h"
 
 SingleChoiceQuestion::SingleChoiceQuestion(const String& text, int points, const Vector<String>& opts, int correct)
     : Question(text, points), options(opts), correctIndex(correct) {}
@@ -53,6 +54,8 @@ void SingleChoiceQuestion::readFromFile(std::ifstream& ifs)
 
 void SingleChoiceQuestion::writeToFile(std::ofstream& ofs) const
 {
+    int type = (int)QuestionType::SingleChoice;
+    ofs << type << "\n";
 	ofs << points << '\n';
 	ofs << text.c_str() << '\n';
 	ofs << correctIndex << '\n';

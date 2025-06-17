@@ -18,3 +18,7 @@ void Question::writeToFile(std::ofstream& ofs) const {
 	ofs << points << '\n';
 	ofs << text.c_str() << '\n';
 }
+
+String Question::getText() const {
+	return text;
+}

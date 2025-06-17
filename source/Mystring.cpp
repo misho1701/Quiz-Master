@@ -13,8 +13,8 @@ void String::free() {
     delete[] data;
 }
 
-String::String() : data(new char[1]), len(0) {
-    data[0] = '\0';
+String::String() : String(""){
+  
 }
 
 String::String(const char* s) {

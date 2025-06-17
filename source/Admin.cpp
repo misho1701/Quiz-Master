@@ -3,9 +3,9 @@
 Admin::Admin(const String& fName, const String& lName, const String& uname, const String& pwd)
     : Users(fName, lName, uname, pwd) {}
 
-Users::Role Admin::getRole() const
+Role Admin::getRole() const
 {
-	return Users::Role::ADMIN;
+	return Role::ADMIN;
 }
 
 bool Admin::isAdmin() const {
@@ -34,6 +34,11 @@ void Admin::removeQuiz(Quiz& quiz, const String& reason) {
 	receiveMessage(message);
 }
 
+Users* Admin::clone() const
+{
+	return new Admin(*this);
+}
+
 void Admin::readFromFile(std::ifstream& ifs)
 {
 	Users::readFromFile(ifs);
@@ -41,5 +46,6 @@ void Admin::readFromFile(std::ifstream& ifs)
 
 void Admin::writeToFile(std::ofstream& ofs) const
 {
+	ofs << "Admin\n";
 	Users::writeToFile(ofs);
 }

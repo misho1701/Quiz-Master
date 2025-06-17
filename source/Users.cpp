@@ -20,7 +20,7 @@ void Users::viewProfile() const {
 	}
 	std::cout << "Favorite Quizzes:\n";
 	for (size_t i = 0; i < favoriteQuizzes.size(); ++i) {
-		std::cout << favoriteQuizzes[i]->getTitle().c_str() << "\n";
+		std::cout << favoriteQuizzes[i].getTitle().c_str() << "\n";
 	}
 	std::cout << "Challenges:\n";
 	for (size_t i = 0; i < challenges.size(); ++i) {
@@ -49,7 +49,7 @@ void Users::viewMessages() const {
 }
 
 void Users::addToFavorites(Quiz* q) {
-	favoriteQuizzes.push_back(q);
+	favoriteQuizzes.push_back(*q);
 	std::cout << "Quiz '" << q->getTitle().c_str() << "' added to favorites.\n";
 	if (q == nullptr) {
 		std::cout << "Warning: Attempted to add a null quiz to favorites.\n";
@@ -69,7 +69,7 @@ void Users::addToFavorites(Quiz* q) {
 
 void Users::removeFromFavorites(int id) {
 	for (size_t i = 0; i < favoriteQuizzes.size(); ++i) {
-		if (favoriteQuizzes[i]->getId() == id) {
+		if (favoriteQuizzes[i].getId() == id) {
 			favoriteQuizzes.remove_at(i);
 			break;
 		}
@@ -89,7 +89,7 @@ void Users::removeFromFavorites(int id) {
 
 void Users::showFavorites() const {
 	for (size_t i = 0; i < favoriteQuizzes.size(); ++i) {
-		std::cout << favoriteQuizzes[i]->getTitle().c_str() << "\n";
+		std::cout << favoriteQuizzes[i].getTitle().c_str() << "\n";
 	}
 	if (favoriteQuizzes.is_empty()) {
 		std::cout << "No favorite quizzes.\n";
@@ -110,6 +110,7 @@ void Users::printInfo() const {
     std::cout << std::endl;
 }
 
+
 void Users::writeToFile(std::ofstream& ofs) const
 {
 	ofs << firstName.c_str() << '\n';
@@ -125,7 +126,7 @@ void Users::writeToFile(std::ofstream& ofs) const
 
 	ofs << favoriteQuizzes.size() << '\n';
 	for (const auto& quiz : favoriteQuizzes) {
-		ofs << quiz->getTitle().c_str() << '\n'; 
+		ofs << quiz.getTitle().c_str() << '\n'; 
 	}
 
 	ofs << challenges.size() << '\n';
@@ -137,6 +138,7 @@ void Users::writeToFile(std::ofstream& ofs) const
 
 void Users::readFromFile(std::ifstream& ifs)
 {
+	ifs.ignore();
 	std::string tempFirstName, tempLastName, tempUsername, tempPassword;
 	std::getline(ifs, tempFirstName);
 	std::getline(ifs, tempLastName);
